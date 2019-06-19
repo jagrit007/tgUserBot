@@ -244,7 +244,7 @@ async def carbon_api(e):
         sleep(3)  # Waiting for downloading
 
         await e.edit("Processing 90%")
-        file = '/home/pi/carbon.png'
+        file = '/home/$USER/carbon.png'
         await e.edit("Done!!")
         await bot.send_file(
          e.chat_id,

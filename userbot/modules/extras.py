@@ -18,6 +18,7 @@ from urllib.parse import quote_plus
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 import random
+from userbot import BRAIN_CHECKER
 
 @register(outgoing=True, pattern="^.leave$")
 async def leave(e):
@@ -75,13 +76,16 @@ async def _(event):
 @register(outgoing=True, pattern="^.fspam")
 async def filterspam(keke):
     #if '-' in str(keke.chat_id):
-    counter = int(keke.text[-2:])
-    for count in range(counter):
-        filter_one = random.choice(["hi", "hello", "bye", "spam", "fspam", "wadu", "waduhek", "download", "upload", "cry", "how", "baby", "nou", "fek"])
-        filter_two = random.choice(['test', 'haha', 'yes', 'tf', 'nospam', 'waduhek', 'lorem', 'ipsum', 'kekzu', 'nou'])
-        final = f"/filter {filter_one} {filter_two}"
-        await keke.respond(final)
-        await keke.delete()
+    if keke.chat_id in BRAIN_CHECKER:
+        await keke.edit("`Not supposed to spam in sudo chats!`")
+    else:
+        counter = int(keke.text[-2:])
+        for count in range(counter):
+            filter_one = random.choice(["hi", "hello", "bye", "spam", "fspam", "wadu", "waduhek", "download", "upload", "cry", "how", "baby", "nou", "fek"])
+            filter_two = random.choice(['test', 'haha', 'yes', 'tf', 'nospam', 'waduhek', 'lorem', 'ipsum', 'kekzu', 'nou'])
+            final = f"/filter {filter_one} {filter_two}"
+            await keke.respond(final)
+            await keke.delete()
         #await asyncio.wait([e.respond(final) for i in range(counts)])
     #else:
         #await keke.edit("`This is not a group dumbass`")

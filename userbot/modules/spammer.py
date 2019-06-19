@@ -9,39 +9,46 @@ from asyncio import wait
 
 from userbot import LOGGER_GROUP, LOGGER, HELPER
 from userbot.events import register
+from userbot import BRAIN_CHECKER
 
 @register(outgoing=True, pattern="^.spam")
 async def spammer(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        message = e.text
-        counter = int(message[6:8])
-        spam_message = str(e.text[8:])
-        await asyncio.wait([e.respond(spam_message) for i in range(counter)])
-        await e.delete()
-        if LOGGER:
-            await e.client.send_message(
-                LOGGER_GROUP,
-                "#SPAM \n\n"
-                "Spam was executed successfully"
-                )
-                               
+        if e.chat_id in BRAIN_CHECKER:
+            await e.edit("`Not supposed to spam in Sudo Chat!`")
+        else:
+            message = e.text
+            counter = int(message[6:8])
+            spam_message = str(e.text[8:])
+            await asyncio.wait([e.respond(spam_message) for i in range(counter)])
+            await e.delete()
+            if LOGGER:
+                await e.client.send_message(
+                    LOGGER_GROUP,
+                    "#SPAM \n\n"
+                    "Spam was executed successfully"
+                    )
+
 @register(outgoing=True, pattern="^.bigspam")
 async def bigspam(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        message = e.text
-        counter = int(message[9:13])
-        spam_message = str(e.text[13:])
-        for i in range(1, counter):
-            await e.respond(spam_message)
-        await e.delete()
-        if LOGGER:
-            await e.client.send_message(
-                LOGGER_GROUP,
-                "#BIGSPAM \n\n"
-                "Bigspam was executed successfully"
-                )
-        
-        
+        if e.chat_id in BRAIN_CHECKER:
+            await e.edit("`Not supposed to spam in Sudo Chat`")
+        else:
+            message = e.text
+            counter = int(message[9:13])
+            spam_message = str(e.text[13:])
+            for i in range(1, counter):
+                await e.respond(spam_message)
+            await e.delete()
+            if LOGGER:
+                await e.client.send_message(
+                    LOGGER_GROUP,
+                    "#BIGSPAM \n\n"
+                    "Bigspam was executed successfully"
+                    )
+
+
 @register(outgoing=True, pattern="^.picspam")
 async def tiny_pic_spam(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
@@ -68,10 +75,3 @@ async def tmeme(e):
         await e.respond(letter)
 
     await e.delete()
-
-@register(outgoing=True, pattern="^.repeat")
-async def repeat(e):
-    message = e.text[10:]
-    count = int(e.text[8:10])
-    repmessage = message * count
-    await e.edit(repmessage)

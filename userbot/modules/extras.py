@@ -233,7 +233,7 @@ async def carbon_api(e):
 
         driver = webdriver.Chrome(options=chrome_options)
         driver.get(url)
-	curdir = os.getcwd()
+	    curdir = os.getcwd()
 	#something wrong here
         download_path = curdir
         driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')

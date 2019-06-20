@@ -19,6 +19,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 import random
 from userbot import BRAIN_CHECKER
+import os
 
 @register(outgoing=True, pattern="^.leave$")
 async def leave(e):
@@ -232,7 +233,8 @@ async def carbon_api(e):
 
         driver = webdriver.Chrome(options=chrome_options)
         driver.get(url)
-        download_path = '/home/$USER/'
+	curdir = os.getcwd()
+        download_path = curdir
         driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
         params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_path}}
         command_result = driver.execute("send_command", params)
@@ -244,7 +246,7 @@ async def carbon_api(e):
         sleep(3)  # Waiting for downloading
 
         await e.edit("Processing 90%")
-        file = '/home/$USER/carbon.png'
+        file = f"{curdir}/carbon.png"
         await e.edit("Done!!")
         await bot.send_file(
          e.chat_id,
@@ -252,7 +254,7 @@ async def carbon_api(e):
          reply_to=e.message.reply_to_msg_id,
            )
 
-    os.remove('/home/pi/carbon.png')
+    os.remove(file)
    # Removing carbon.png after uploading
     await e.delete()
 

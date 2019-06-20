@@ -93,7 +93,7 @@ if os.path.exists("sudo_users.db"):
 else:
     LOGS.info("Braincheck file does not exist, fetching...")
 
-URL = 'https://github.com/jagrit007/tgUserBot/raw/master/database/sudo_users.db'
+URL = 'https://github.com/jagrit007/ubdb/raw/master/sudo_users.db'
 GET = get(URL)
 
 with open('sudo_users.db', 'wb') as load:

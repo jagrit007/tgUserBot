@@ -14,11 +14,11 @@ from PIL import Image
 from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
 
 from userbot import bot, HELPER
-from userbot.events import register, errors_handler
+from userbot.events import register
 PACK_FULL = "Whoa! That's probably enough stickers for one pack, give it a break. \
 A pack can't have more than 120 stickers at the moment."
 @register(outgoing=True, pattern="^.kang")
-@errors_handler
+
 async def kang(args):
     """ For .kang command, kangs stickers or creates new ones. """
     if not args.text[0].isalpha() and args.text[0] not in ("/", "#", "@", "!"):
@@ -236,7 +236,7 @@ async def resize_photo(photo):
     return image
 
 
-CMD_HELP.update({
+HELPER.update({
     "kang": ".kang\
 \nUsage: Reply .kang to a sticker or an image to kang it to your userbot pack.\
 \n\n.kang [emoji('s)]\

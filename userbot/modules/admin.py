@@ -22,6 +22,7 @@ from asyncio import sleep
 from telethon.tl.functions.messages import UpdatePinnedMessageRequest
 
 from userbot import BRAIN_CHECKER, HELPER, LOGGER, LOGGER_GROUP, bot
+from userbot.GBAN_CHATS import GBAN_BOTS
 from userbot.events import register
 
 # =================== CONSTANT ===================
@@ -489,6 +490,36 @@ async def muter(moot):
         if i.sender == str(moot.sender_id):
             await moot.delete()
 
+#Gban WIP
+@register(outgoing=True, pattern="^.gban(?: |$)(.*)")
+async def gban(usr):
+    if not usr.text[0].isalpha() and usr.text[0] not in ("/", "#", "@", "!"):
+        # Admin or creator check
+
+        user = await get_user_from_event(usr)
+        if not user:
+            await usr.edit("`Couldn't fetch user.`")
+            return
+
+        # If the targeted user is a Sudo
+        if user.id in BRAIN_CHECKER:
+            await usr.edit(
+                "`Gban Error! I am not supposed to gban this user`"
+            )
+            return
+        gbannished = user.id
+        #gbannisheders_msg = await usr.get_reply_message()
+        gbanner = int(usr.from_id)
+        if gbanner not in BRAIN_CHECKER:
+            await usr.edit("`You are not allowed to GBAN people!`")
+        else:
+            await usr.edit("`Banning Globally`")
+            #Starts Here
+            for eachid in GBAN_BOTS:
+                await (await usr.get_reply_message()).forward_to(eachid)
+                gban_text = f"/gban {gbannished}"
+                await bot.send_message(eachid, gban_text)
+
 
 @register(outgoing=True, pattern="^.ungmute(?: |$)(.*)")
 async def ungmoot(un_gmute):
@@ -697,7 +728,7 @@ async def pin(msg):
         if not admin and not creator:
             await msg.edit(NO_ADMIN)
             return
-        
+
         to_pin = msg.reply_to_msg_id
 
         if not to_pin:
@@ -832,7 +863,7 @@ async def get_user_from_id(user, event):
 
     return user_obj
 
-        
+
 
 HELPER.update({
     "promote": "Usage: Reply to someone's message with .promote to promote them."

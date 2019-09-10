@@ -35,3 +35,4 @@ pyDownload
 PyDrive
 psutil
 dnspython
+lxml

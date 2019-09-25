@@ -10,7 +10,7 @@ import re
 from telethon.tl.types import MessageMediaPhoto
 from PIL import Image
 
-from userbot import HELPER
+from userbot import HELPER, bot
 from userbot.events import register
 
 opener = urllib.request.build_opener()

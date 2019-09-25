@@ -9,7 +9,7 @@ async def fcmd(message):
     if n==' ' or n=='f':
         await message.edit("┏━━━┓\n┃┏━━┛\n┃┗━━┓\n┃┏━━┛\n┃┃\n┗┛")
     
-    else
+    else:
         out = ""
         for line in [5, 1, 1, 4, 1, 1, 1]:
             c = max(line, 1)

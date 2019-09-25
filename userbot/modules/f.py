@@ -5,16 +5,15 @@ from userbot.events import register
 
 @register(outgoing=True, pattern=r"^.f")
 async def fcmd(message):
-    n = len(message)
-    args = message[4]
-    if n <= 3:
+    n = message.text[-1]
+    if n==' ' or n=='f':
         await message.edit("┏━━━┓\n┃┏━━┛\n┃┗━━┓\n┃┏━━┛\n┃┃\n┗┛")
     
-    if n > 3:
+    else
         out = ""
         for line in [5, 1, 1, 4, 1, 1, 1]:
-            c = max(round(line / (n-3)), 1)
-            out += (args * c) + "\n"
+            c = max(line, 1)
+            out += (n * c) + "\n"
         await message.edit("<code>" + html.escape(out) + "</code>")
 
 

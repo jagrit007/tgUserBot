@@ -6,10 +6,10 @@ from userbot.events import register
 @register(outgoing=True, pattern=r"^.f")
 async def fcmd(message):
     n = message.text[-1]
-    if n==' ' or n=='f':
+    if (message.text[-1] == 'f' or message.text[-1] == ' ') and message.text[0]=='.':
         await message.edit("┏━━━┓\n┃┏━━┛\n┃┗━━┓\n┃┏━━┛\n┃┃\n┗┛")
     
-    else:
+    elif message.text[0]=='.':
         out = ""
         for line in [5, 1, 1, 4, 1, 1, 1]:
             c = max(line, 1)

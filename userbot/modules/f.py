@@ -3,10 +3,10 @@ import html
 from userbot import HELPER, bot
 from userbot.events import register
 
-@register(outgoing=True, pattern=r"^.f")
+@register(outgoing=True, pattern=r"^.f$")
 async def fcmd(message):
     n = message.text[-1]
-    if (message.text[-1] == 'f' or message.text[-1] == ' ') and message.text[0]=='.':
+    if message.text[-1] == 'f' and message.text[0]=='.':
         await message.edit("┏━━━┓\n┃┏━━┛\n┃┗━━┓\n┃┏━━┛\n┃┃\n┗┛")
     
     elif message.text[0]=='.':

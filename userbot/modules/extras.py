@@ -159,9 +159,9 @@ async def _(e):
             "👁👁\n  💋  =====> Abey Ja Na Chutiye",
             "👁👁\n  👄  =====> Hi All, How Are You Guys..."
         ]
-        for i in range(0, 103):
-            await asyncio.sleep(3)
-            await e.edit(animation_chars[i%103])
+    for i in range(0, 103):
+        await asyncio.sleep(3)
+        await e.edit(animation_chars[i%103])
 
 
 @register(outgoing=True, pattern="^.fspam")

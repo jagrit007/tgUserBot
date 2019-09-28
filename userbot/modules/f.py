@@ -19,7 +19,7 @@ async def fcmd(e):
             for line in [5, 1, 1, 4, 1, 1, 1]:
                 c = max(line, 1)
                 out += (n * c) + "\n"
-            await message.edit(html.escape(out))
+            await e.edit(html.escape(out))
 
 
 

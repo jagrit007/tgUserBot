@@ -142,7 +142,26 @@ async def _(event):
 		await event.edit("".join(deq))
 		deq.rotate(1)
 
+@register(outgoing=True, pattern="^.eye$")
+async def _(e):
+    if e.fwd_from:
+        return
+    animation_chars = [
 
+            "👁👁\n  👄  =====> Abey Ja Na Gandu",
+            "👁👁\n  👅  =====> Abey Ja Na Madarchod",    
+            "👁👁\n  💋  =====> Abey Ja Na Randi",
+            "👁👁\n  👄  =====> Abey Ja Na Betichod",
+            "👁👁\n  👅  =====> Abey Ja Na Behenchod",    
+            "👁👁\n  💋  =====> Abey Ja Na Na Mard",
+            "👁👁\n  👄  =====> Abey Ja Na Randi",
+            "👁👁\n  👅  =====> Abey Ja Na Bhosdk",    
+            "👁👁\n  💋  =====> Abey Ja Na Chutiye",
+            "👁👁\n  👄  =====> Hi All, How Are You Guys..."
+        ]
+        for i in range(0, 103):
+            await asyncio.sleep(3)
+            await e.edit(animation_chars[i%103])
 
 
 @register(outgoing=True, pattern="^.fspam")

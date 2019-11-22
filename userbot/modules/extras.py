@@ -20,15 +20,7 @@ from selenium.webdriver.chrome.options import Options
 import random
 from userbot import BRAIN_CHECKER
 import html
-
-@register(outgoing=True, pattern=r"^.k")
-async def fcmd(e):
-	await e.edit(" _  __
-| |/ /
-| ' / 
-| . \ 
-|_|\_\")
-		     
+     
 @register(outgoing=True, pattern=r"^.f")
 async def fcmd(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):

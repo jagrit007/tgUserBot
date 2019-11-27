@@ -21,7 +21,7 @@ import random
 from userbot import BRAIN_CHECKER
 import html
 
-@register(outgoing=True, pattern="^.k$")
+@register(outgoing=True, pattern="^\.k$")
 async def gtfo(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`\n▐   ▞ `"
@@ -32,7 +32,7 @@ async def gtfo(e):
                      "`\n▐    ▚ `")
 
      
-@register(outgoing=True, pattern=r"^.f")
+@register(outgoing=True, pattern=r"^\.f")
 async def fcmd(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         message = e.text
@@ -227,7 +227,7 @@ async def stfu(e):
                      "`\n⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄`")
 
 
-@register(outgoing=True, pattern="^.repeat")
+@register(outgoing=True, pattern="^\.repeat")
 async def inlinespem(e):
     #defmessage = e.text[0]
     message = e.text[8:-4]
@@ -255,7 +255,7 @@ async def cry(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("(;´༎ຶД༎ຶ)")
 
-@register(outgoing=True, pattern="^.human$")
+@register(outgoing=True, pattern="^\.human$")
 async def _(e):
     if e.fwd_from:
         return
@@ -365,7 +365,7 @@ async def _(event):
 		await event.edit("".join(deq))
 		deq.rotate(1)
 
-@register(outgoing=True, pattern="^.eye$")
+@register(outgoing=True, pattern="^\.eye$")
 async def _(e):
     if e.fwd_from:
         return
@@ -872,50 +872,50 @@ async def _(event):
         output_str += f"- {channel_obj.title} @{channel_obj.username} \n"
     await event.edit(output_str)
 
-@register(outgoing=True, pattern="^\$")
-async def rextestercli(e):
-    stdin = ""
-    message = e.text
-    chat = await e.get_chat()
+# @register(outgoing=True, pattern="^\$")
+# async def rextestercli(e):
+#     stdin = ""
+#     message = e.text
+#     chat = await e.get_chat()
 
-    if len(message.split()) > 1:
-        regex = re.search(
-            r"^\$([\w.#+]+)\s+([\s\S]+?)(?:\s+\/stdin\s+([\s\S]+))?$",
-            message,
-            re.IGNORECASE,
-        )
-        language = regex.group(1)
-        code = regex.group(2)
-        stdin = regex.group(3)
+#     if len(message.split()) > 1:
+#         regex = re.search(
+#             r"^\$([\w.#+]+)\s+([\s\S]+?)(?:\s+\/stdin\s+([\s\S]+))?$",
+#             message,
+#             re.IGNORECASE,
+#         )
+#         language = regex.group(1)
+#         code = regex.group(2)
+#         stdin = regex.group(3)
 
-        try:
-            rextester = Rextester(language, code, stdin)
-            res = await rextester.exec()
-        except UnknownLanguage as exc:
-            await e.edit(str(exc))
-            return
+#         try:
+#             rextester = Rextester(language, code, stdin)
+#             res = await rextester.exec()
+#         except UnknownLanguage as exc:
+#             await e.edit(str(exc))
+#             return
 
-        output = ""
-        output += f"**Language:**\n```{language}```"
-        output += f"\n\n**Source:** \n```{code}```"
+#         output = ""
+#         output += f"**Language:**\n```{language}```"
+#         output += f"\n\n**Source:** \n```{code}```"
 
-        if res.result:
-            output += f"\n\n**Result:** \n```{res.result}```"
+#         if res.result:
+#             output += f"\n\n**Result:** \n```{res.result}```"
 
-        if res.warnings:
-            output += f"\n\n**Warnings:** \n```{res.warnings}```\n"
+#         if res.warnings:
+#             output += f"\n\n**Warnings:** \n```{res.warnings}```\n"
 
-        if res.errors:
-            output += f"\n\n**Errors:** \n'```{res.errors}```"
+#         if res.errors:
+#             output += f"\n\n**Errors:** \n'```{res.errors}```"
 
-        if len(res.result) > 4096:
-            with io.BytesIO(str.encode(res.result)) as out_file:
-                out_file.name = "result.txt"
-                await bot.send_file(chat.id, file = out_file)
-                await e.edit(code)
-            return
+#         if len(res.result) > 4096:
+#             with io.BytesIO(str.encode(res.result)) as out_file:
+#                 out_file.name = "result.txt"
+#                 await bot.send_file(chat.id, file = out_file)
+#                 await e.edit(code)
+#             return
 
-        await e.edit(output)
+#         await e.edit(output)
 
 
 @register(outgoing=True, pattern="^.setlang")

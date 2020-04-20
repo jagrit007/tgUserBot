@@ -1,5 +1,4 @@
 import asyncio, subprocess
-from asyncio import wait
 import time, re, io, os
 from userbot import bot, LOGGER, LOGGER_GROUP, HELPER
 from telethon import events, functions, types
@@ -22,7 +21,7 @@ from userbot import BRAIN_CHECKER, GOOGLE_CHROME_BIN, CHROME_DRIVER
 import html
 
 @register(outgoing=True, pattern="^\.k$")
-async def gtfo(e):
+async def kchar(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`\n▐   ▞ `"
                      "`\n▐  ▞ `"
@@ -107,7 +106,7 @@ async def gtfo(e):
 
 
 @register(outgoing=True, pattern="^.fag$")
-async def gtfo(e):
+async def fagstfu(e):
    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`\n█████████`"
                      "`\n█▄█████▄█`"
@@ -178,7 +177,7 @@ async def lool(e):
                      "`\n┈┈┈▏┃┃┈┈┈┈▏┃┃┈┈┈┈ `")
 
 @register(outgoing=True, pattern="^.bot$")
-async def bot(e):
+async def botidk(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("` \n   ╲╲╭━━━━╮ \n╭╮┃▆┈┈▆┃╭╮ \n┃╰┫▽▽▽┣╯┃ \n╰━┫△△△┣━╯`"
                      "`\n╲╲┃┈┈┈┈┃  \n╲╲┃┈┏┓┈┃ `")
@@ -197,7 +196,7 @@ async def gey(e):
 #ok wtf?
 
 @register(outgoing=True, pattern="^.tt$")
-async def stfu(e):
+async def tfisdis(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("`\n⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄`"
                      "`\n⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄`"
@@ -280,7 +279,7 @@ async def _(e):
  ]
     for i in range(0, 16):
         await asyncio.sleep(0.5)
-        await event.edit(animation_chars[i % 16])
+        await e.edit(animation_chars[i % 16])
 
 
 @register(outgoing=True, pattern="^.chu$")
@@ -972,7 +971,7 @@ async def carbon_api(e):
     await e.edit("`Processing..\n75%`")
     # Waiting for downloading
     while not os.path.isfile(f"{dir}/carbon.png"):
-        await sleep(0.5)
+        await asyncio.sleep(0.5)
     await e.edit("`Processing..\n100%`")
     file = f'{dir}/carbon.png'
     await e.edit("`Uploading..`")

@@ -85,6 +85,9 @@ SPOTIFY_PASS = os.environ.get("SPOTIFY_PASS", None)
 SPOTIFY_BIO_PREFIX = os.environ.get("SPOTIFY_BIO_PREFIX", None)
 DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
 
+CHROME_DRIVER=os.environ.get("CHROME_DRIVER", "/usr/bin/chromedriver")
+GOOGLE_CHROME_BIN=os.environ.get("GOOGLE_CHROME_BIN", "/usr/bin/chromium-browser")
+IS_HEROKU=sb(os.environ.get("is_Heroku", "False")) #for future-use.
 # pylint: disable=invalid-name
 bot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
 

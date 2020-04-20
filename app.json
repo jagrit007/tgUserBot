@@ -38,6 +38,21 @@
       "value": "",
       "required": false
     },
+    "CHROME_DRIVER":{
+      "description": "for Carbon module to work.",
+      "value": "/usr/bin/chromedriver",
+      "required": true
+    },
+    "GOOGLE_CHROME_BIN":{
+      "description": "Google Chrome Binary for scraping modules",
+      "value": "/usr/bin/chromium-browser",
+      "required": true
+    },
+    "is_Heroku": {
+      "description": "Set to true if you using bot on heroku",
+      "value": true,
+      "required": true
+    },
     "LOGGER_GROUP": {
       "description": "ChatID for the Log group",
       "value": "",

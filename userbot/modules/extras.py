@@ -18,7 +18,7 @@ from urllib.parse import quote_plus
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 import random
-from userbot import BRAIN_CHECKER
+from userbot import BRAIN_CHECKER, GOOGLE_CHROME_BIN, CHROME_DRIVER
 import html
 
 @register(outgoing=True, pattern="^\.k$")
@@ -925,58 +925,66 @@ async def setlang(prog):
         LANG = prog.text.split()[1]
         await prog.edit(f"language set to {LANG}")
 
-curdir = os.getcwd()
-
 @register(outgoing=True, pattern="^.carbon")
 async def carbon_api(e):
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("Processing...")
-        CARBON = 'https://carbon.now.sh/?l={lang}&code={code}'
-        LANG = "en"
-        textx = await e.get_reply_message()
-        pcode = e.text
-        if pcode[8:]:
-            pcode = str(pcode[8:])
-        elif textx:
-            pcode = str(textx.message)  # Importing message to module
-        code = quote_plus(pcode)  # Converting to urlencoded
-        url = CARBON.format(code=code, lang=LANG)
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--window-size=1920x1080")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument('--disable-gpu')
-        prefs = {'download.default_directory': '/'}
-        chrome_options.add_experimental_option('prefs', prefs)
-        await e.edit("Processing 30%")
+    """ A Wrapper for carbon.now.sh """
+    await e.edit("`Processing..`")
+    CARBON = 'https://carbon.now.sh/?l={lang}&code={code}'
+    dir = os.getcwd()
+    CARBONLANG = "en"
+    textx = await e.get_reply_message()
+    pcode = e.text
+    if pcode[8:]:
+        pcode = str(pcode[8:])
+    elif textx:
+        pcode = str(textx.message)  # Importing message to module
+    code = quote_plus(pcode)  # Converting to urlencoded
+    await e.edit("`Processing..\n25%`")
+    if os.path.isfile(f"{dir}/carbon.png"):
+        os.remove(f"{dir}/carbon.png")
+    url = CARBON.format(code=code, lang=CARBONLANG)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.binary_location = GOOGLE_CHROME_BIN
+    chrome_options.add_argument("--window-size=1920x1080")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-gpu")
+    prefs = {'download.default_directory': dir}
+    chrome_options.add_experimental_option('prefs', prefs)
+    driver = webdriver.Chrome(executable_path=CHROME_DRIVER,
+                              options=chrome_options)
+    driver.get(url)
+    await e.edit("`Processing..\n50%`")
+    driver.command_executor._commands["send_command"] = (
+        "POST", '/session/$sessionId/chromium/send_command')
+    params = {
+        'cmd': 'Page.setDownloadBehavior',
+        'params': {
+            'behavior': 'allow',
+            'downloadPath': dir
+        }
+    }
+    command_result = driver.execute("send_command", params)
+    driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
+   # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
+   # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
+    await e.edit("`Processing..\n75%`")
+    # Waiting for downloading
+    while not os.path.isfile(f"{dir}/carbon.png"):
+        await sleep(0.5)
+    await e.edit("`Processing..\n100%`")
+    file = f'{dir}/carbon.png'
+    await e.edit("`Uploading..`")
+    await e.client.send_file(
+        e.chat_id,
+        file,
+        reply_to=e.message.reply_to_msg_id,
+    )
 
-        driver = webdriver.Chrome(options=chrome_options)
-        driver.get(url)
-	#something wrong here
-        download_path = curdir
-        driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
-        params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_path}}
-        command_result = driver.execute("send_command", params)
-
-        driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
-        sleep(3)  # this might take a bit.
-        await e.edit("Processing 50%")
-        driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
-        sleep(3)  # Waiting for downloading
-
-        await e.edit("Processing 90%")
-        file = f"{curdir}/carbon.png"
-        await e.edit("Done!!")
-        await bot.send_file(
-         e.chat_id,
-         file,
-         reply_to=e.message.reply_to_msg_id,
-           )
-
-    os.remove(file)
-   # Removing carbon.png after uploading
-    await e.delete()
+    os.remove(f'{dir}/carbon.png')
+    driver.quit()
+    await e.delete()  # Deleting msg
 
 HELPER.update({
       "carbon":".carbon <text> \n Beautify your code"
@@ -1004,7 +1012,7 @@ HELPER.update({
     "clock": "Bot will send a cool clock animation."
 })
 HELPER.update({
-    "readme": "Reedme."
+    "readme": "Readme."
 })
 HELPER.update({
     "sauce": "source."
@@ -1016,7 +1024,7 @@ HELPER.update({
     "myusernames": "List of Usernames owned by you."
 })
 HELPER.update({
-    "oof": "Same as ;__; but ooof"
+    "oof": "Same as ;__; but ooofs"
 })
 HELPER.update({
     "solar": "animations"

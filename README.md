@@ -1,4 +1,4 @@
-# Telegram-UserBot
+# [Deprecated]Telegram-UserBot
 
 ### installing
 
